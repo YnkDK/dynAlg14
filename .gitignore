@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# Ignore temp files
+*~
+
+# Ignore main executables
+main
