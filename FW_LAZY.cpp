@@ -12,7 +12,7 @@
 #include "FW_LAZY.h"
 
 void FW_LAZY::init(int n) {
-	if(adjacency_matrix != NULL) delete adjacency_matrix;
+	if(adjacency_matrix != NULL) delete[] adjacency_matrix;
 	cols = n;
 	
 	adjacency_matrix = new bool[n*n];
