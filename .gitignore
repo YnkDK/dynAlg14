@@ -31,4 +31,4 @@
 *~
 
 # Ignore main executables
-main
+bin/*
