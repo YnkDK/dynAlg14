@@ -2,34 +2,34 @@
 
 unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n) {
 	const unsigned int SIZE = n*n; //< Size of matrix
-	bool even[SIZE]; //< Temp array stating if there is a path from (i,j) 
-	bool  odd[SIZE]; //< Temp array stating if there is a path from (i,j)
+	bool *current = new bool[SIZE]; //< Temp array stating if there is a path from (i,j) 
+	bool *previous = new bool[SIZE]; //< Temp array stating if there is a path from (i,j)
 	unsigned int i, j, k; //< Indices for the loop
 	unsigned int entry, col; //< Position in matrix
 	unsigned int count = 0; //< Number of transitive closures
-	bool *current, *previous; //< Keeps T(k) and T(k-1) respectively
+	bool *tmp; //< Keeps T(k) and T(k-1) respectively
 	bool gotIntermediate; //< Indicate if node_k was used as intermediate node
 	
 	// All are not connected at first
-	memset(even, false, SIZE*sizeof(bool));
-	memset( odd, false, SIZE*sizeof(bool));
+	memset( current, false, SIZE*sizeof(bool));
+	memset(previous, false, SIZE*sizeof(bool));
 	
 	// Get all closures without any intermediate nodes
 	for(i = 0; i < n; i++) {
 		for(j = 0; j < n; j++) {
 			entry = i*n + j;
 			if(adjacency_matrix[entry] || i == j) {
-				if(!odd[entry]) count++;
-				odd[entry] = true;
+				count++;
+				current[entry] = true;
 			}
-			
 		}
 	}
 	
 	for(k = 0; k < n; k++) {
 		// Swap current and previous
-		current  = (k % 2 == 0) ? even : odd;
-		previous = (k % 2 == 0) ? odd : even;
+		tmp = current;
+		current = previous;
+		previous = tmp;
 
 		for(i = 0; i < n; i++) {
 			col = i*n; //<- Current column
@@ -52,6 +52,9 @@ unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n) {
 			}
 		}
 	}
+	
+	delete current;
+	delete previous;
 	// The total number of pairs that is part of the transitive closure
 	return count;
 }

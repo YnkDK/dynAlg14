@@ -61,6 +61,7 @@ int main(int argc, const char* argv[]) {
 			}
 		}
 		std::cout << std::endl;
+		delete alg;
 	}
 	return 0;
 }
