@@ -34,6 +34,10 @@ public:
 		cols = -1;
 		adjacency_matrix = NULL;
 	}
+	
+	~FW_LAZY() {
+		delete adjacency_matrix;
+	}
 };
 
 #endif //_FW_LAZY_H

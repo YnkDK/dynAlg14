@@ -12,7 +12,6 @@ unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n) {
 	
 	// All are not connected at first
 	memset( current, false, SIZE*sizeof(bool));
-	memset(previous, false, SIZE*sizeof(bool));
 	
 	// Get all closures without any intermediate nodes
 	for(i = 0; i < n; i++) {
