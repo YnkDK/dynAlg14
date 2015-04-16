@@ -12,6 +12,7 @@
 #include "FW_EAGER.h"
 
 void FW_EAGER::init(int n) {
+	if(adjacency_matrix != NULL) delete adjacency_matrix;
 	cols = n;
 	count = n;
 	

@@ -36,6 +36,10 @@ public:
 		count = -1;
 		adjacency_matrix = NULL;
 	}
+	
+	~FW_EAGER() {
+		if(adjacency_matrix != NULL) delete adjacency_matrix;
+	}
 };
 
 #endif //_FW_EAGER_H

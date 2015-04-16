@@ -36,7 +36,7 @@ public:
 	}
 	
 	~FW_LAZY() {
-		delete adjacency_matrix;
+		if(adjacency_matrix != NULL) delete adjacency_matrix;
 	}
 };
 
