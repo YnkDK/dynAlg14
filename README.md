@@ -12,11 +12,11 @@ This project has both theoretical and practical aspects. In this repository only
 
 All solutions implements the class TC (Transitive Closure) with the following functions:
 
-1. init(int n)
-2. ins(int i, int j)
-3. del(int i, int j)
-4. query()
-5. get_name()
+1. `init(int n)`
+2. `ins(int i, int j)`
+3. `del(int i, int j)`
+4. `query()`
+5. `get_name()`
 
 # Compile the code
 TODO
