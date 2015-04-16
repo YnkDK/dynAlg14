@@ -1,0 +1,19 @@
+init(3)
+insert(0,1)
+transitive closure?
+insert(0,2)
+transitive closure?
+insert(1,2)
+transitive closure?
+delete(1,2)
+transitive closure?
+insert(2,1)
+transitive closure?
+delete(0,1)
+transitive closure?
+insert(1,0)
+transitive closure?
+delete(0,2)
+transitive closure?
+insert(2,0)
+transitive closure?
