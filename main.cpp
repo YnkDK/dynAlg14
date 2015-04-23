@@ -14,6 +14,7 @@
 #include "TC.h"
 #include "FW_LAZY.h"
 #include "FW_EAGER.h"
+#include "DFS_LAZY.h"
 
 #include "input_reader.h"
 
@@ -31,11 +32,12 @@ int main(int argc, const char* argv[]) {
 	// First define which algorithms to run
 	std::vector<TC*> algorithms = {
 		new FW_LAZY(),
-		new FW_EAGER()
+		new FW_EAGER(), 
+		new DFS_LAZY(),
 	}; 
 	// Then define input
 	std::vector<Input> change_sequence;
-	read_input("input/changefile3.txt", change_sequence);
+	read_input("input/changefile10.txt", change_sequence);
 	
 	TC *tc = NULL;
 	for(auto &alg : algorithms) {
