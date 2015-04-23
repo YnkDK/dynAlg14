@@ -15,6 +15,7 @@
 #include "TC.h"
 #include "FW_LAZY.h"
 #include "FW_EAGER.h"
+#include "DFS_LAZY.h"
 
 #include "input_reader.h"
 #include "performance.h"
@@ -42,7 +43,8 @@ int main(int argc, const char* argv[]) {
 	// First define which algorithms to run
 	std::vector<TC*> algorithms = {
 		new FW_LAZY(),
-		new FW_EAGER()
+		new FW_EAGER(), 
+		new DFS_LAZY(),
 	}; 
 	// Then define input
 	std::vector<Input> change_sequence;
@@ -53,7 +55,7 @@ int main(int argc, const char* argv[]) {
 	unsigned int idxEnd = inputFile.find(".txt");
 	std::string output_prefix = inputFile.substr(idx, idxEnd-idx);
 	perf->run(algorithms, change_sequence, output_prefix);
-	
+
 	
 	return 0;
 }

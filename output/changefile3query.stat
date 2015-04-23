@@ -1,18 +1,27 @@
- Lazy Floyd-Warshall,6301
- Lazy Floyd-Warshall,2890
- Lazy Floyd-Warshall,2393
- Lazy Floyd-Warshall,2057
- Lazy Floyd-Warshall,2002
- Lazy Floyd-Warshall,2228
- Lazy Floyd-Warshall,2057
- Lazy Floyd-Warshall,2072
- Lazy Floyd-Warshall,1931
-Eager Floyd-Warshall,978
-Eager Floyd-Warshall,938
-Eager Floyd-Warshall,938
+ Lazy Floyd-Warshall,6603
+ Lazy Floyd-Warshall,2824
+ Lazy Floyd-Warshall,2243
+ Lazy Floyd-Warshall,1761
+ Lazy Floyd-Warshall,1811
+ Lazy Floyd-Warshall,1877
+ Lazy Floyd-Warshall,1952
+ Lazy Floyd-Warshall,1907
+ Lazy Floyd-Warshall,2143
+Eager Floyd-Warshall,968
+Eager Floyd-Warshall,944
+Eager Floyd-Warshall,928
+Eager Floyd-Warshall,913
 Eager Floyd-Warshall,898
+Eager Floyd-Warshall,883
 Eager Floyd-Warshall,863
-Eager Floyd-Warshall,878
-Eager Floyd-Warshall,858
-Eager Floyd-Warshall,883
-Eager Floyd-Warshall,883
+Eager Floyd-Warshall,888
+Eager Floyd-Warshall,872
+Lazy DFS,1691
+Lazy DFS,1335
+Lazy DFS,1369
+Lazy DFS,1099
+Lazy DFS,1355
+Lazy DFS,1235
+Lazy DFS,1631
+Lazy DFS,1330
+Lazy DFS,1254
