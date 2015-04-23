@@ -10,12 +10,16 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <string>
 
 #include "TC.h"
 #include "FW_LAZY.h"
 #include "FW_EAGER.h"
 
 #include "input_reader.h"
+#include "performance.h"
+
+const std::string inputPath ("input/");
 
 void print_matrix(bool *matrix, unsigned int n) {
 	unsigned int i, j;
@@ -28,6 +32,13 @@ void print_matrix(bool *matrix, unsigned int n) {
 }
 
 int main(int argc, const char* argv[]) {
+	if(argc != 2) {
+		return -1;
+	}
+	Performance *perf = new Performance();
+	// Read input file (at most 255 characters)
+	std::string inputFile (argv[1], 255);
+	
 	// First define which algorithms to run
 	std::vector<TC*> algorithms = {
 		new FW_LAZY(),
@@ -35,33 +46,14 @@ int main(int argc, const char* argv[]) {
 	}; 
 	// Then define input
 	std::vector<Input> change_sequence;
-	read_input("input/changefile3.txt", change_sequence);
+	read_input(inputFile.c_str(), change_sequence);
 	
-	TC *tc = NULL;
-	for(auto &alg : algorithms) {
-		tc = alg;
-		std::cout << "Running: " << alg->get_name() << std::endl;
-		for (auto &change : change_sequence) {
-			switch(change.type) {
-			case 3:
-				tc->init(change.i);
-				break;
-			case 2:
-				std::cout << "Query: " << tc->query() << std::endl;
-				break;
-			case 1:
-				tc->del(change.i, change.j);
-				break;
-			case 0:
-				tc->ins(change.i, change.j);
-				break;
-			default:
-				std::cout << "ERROR!!" << std::endl;
-				return 1;
-			}
-		}
-		std::cout << std::endl;
-		delete alg;
-	}
+	// Format the output prefix
+	unsigned int idx = inputFile.find("change");
+	unsigned int idxEnd = inputFile.find(".txt");
+	std::string output_prefix = inputFile.substr(idx, idxEnd-idx);
+	perf->run(algorithms, change_sequence, output_prefix);
+	
+	
 	return 0;
 }

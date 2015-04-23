@@ -1,6 +1,6 @@
 BIN = bin
 TC = floyd_warshall.cpp FW_EAGER.cpp FW_LAZY.cpp
-UTILS = input_reader.cpp
+UTILS = input_reader.cpp performance.cpp
 FLAGS = -O3 -Wall -lrt -std=c++0x
 
 main: *.cpp *.h
