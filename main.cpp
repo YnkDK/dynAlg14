@@ -16,6 +16,7 @@
 #include "FW_LAZY.h"
 #include "FW_EAGER.h"
 #include "DFS_LAZY.h"
+#include "DFS_EAGER.h"
 
 #include "input_reader.h"
 #include "performance.h"
@@ -45,6 +46,7 @@ int main(int argc, const char* argv[]) {
 		new FW_LAZY(),
 		new FW_EAGER(), 
 		new DFS_LAZY(),
+		new DFS_EAGER(),
 	}; 
 	// Then define input
 	std::vector<Input> change_sequence;
