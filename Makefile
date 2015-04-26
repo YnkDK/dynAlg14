@@ -5,4 +5,5 @@ FLAGS = -O3 -Wall -lrt -std=c++0x
 
 main: *.cpp *.h
 	mkdir -p $(BIN)
+	mkdir -p output
 	g++ $(FLAGS) $(UTILS) $(TC) main.cpp -o $(BIN)/main
