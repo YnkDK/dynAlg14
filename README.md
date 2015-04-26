@@ -28,4 +28,23 @@ Execute the main binary file to run the experiments, e.g. `./bin/main ./input/ch
 3. changefile3-query.stat - Timings of calls for `query()` on all algorihms
 4. changefile(name).out - Output of `query()`, where (name) is replaced by `get_name()`
 
+# Test for correctness
+Executing the Python script `./cmp_changefile.py` prints the following if everything is correct:
 
+```
+
+All output files have been compared!
+```
+while an error might yield
+
+```
+
+=========== ERROR IN changefile3 ===========
+Eager DFS and Lazy DFS mismatches
+ Lazy Floyd-Warshall and Lazy DFS mismatches
+Lazy DFS and Eager Floyd-Warshall mismatches
+============================================ 
+
+All output files have been compared!
+```
+indicating that Lazy DFS is incorrect on changefile3 compared to Eager DFS and Lazy Floyd-Warshall
