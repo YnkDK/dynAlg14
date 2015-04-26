@@ -1,0 +1,24 @@
+ Lazy Floyd-Warshall,2649
+ Lazy Floyd-Warshall,903
+ Lazy Floyd-Warshall,923
+ Lazy Floyd-Warshall,889
+ Lazy Floyd-Warshall,938
+ Lazy Floyd-Warshall,888
+Eager Floyd-Warshall,3873
+Eager Floyd-Warshall,2117
+Eager Floyd-Warshall,2068
+Eager Floyd-Warshall,1686
+Eager Floyd-Warshall,1761
+Eager Floyd-Warshall,1856
+Lazy DFS,2057
+Lazy DFS,1926
+Lazy DFS,1159
+Lazy DFS,1320
+Lazy DFS,1008
+Lazy DFS,1395
+Eager DFS,2729
+Eager DFS,1836
+Eager DFS,1741
+Eager DFS,1841
+Eager DFS,1645
+Eager DFS,2002
