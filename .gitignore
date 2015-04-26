@@ -29,6 +29,10 @@
 
 # Ignore temp files
 *~
+*.pyc
+*.stat
 
-# Ignore main executables
+# Ignore binaries
 bin/*
+*.png
+
