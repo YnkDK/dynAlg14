@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from os import listdir
 from os.path import isfile, join, abspath
 from filecmp import cmp as diff
@@ -8,6 +10,7 @@ from math import ceil
 OUTPUT_PATH = abspath(join(".", "output"))
 # Holds the test cases, e.g. test_cases['changefile3'] = ('Lazy DFS', PATH)
 test_cases = dict()
+print ''
 
 def get_test_case(basename):
 	"""
@@ -49,9 +52,22 @@ for f in listdir(OUTPUT_PATH):
 
 # Check if the files are the same for each changefile
 for key in sorted(test_cases.keys(), key=lambda x: int(x[10:])):
-	header = '=== Running on {:s} ==='.format(key)
-	print header
+	body = []
 	for x, y in combinations(test_cases[key], 2):
 		if not diff(x[1], y[1]):
-			print x[0], y[0], 'mismatch in', key
-	print '='*int((len(header)-6.0)/2), 'DONE', '='*int(ceil((len(header)-6.0)/2)), '\n'
+			body.append("{:s} and {:s} mismatches".format(x[0], y[0]))
+			
+	if len(body) > 0:
+		width = len(max(body, key=len))
+		# Prepare header to be printed
+		hwidth = (width-11-len(key))/2.0
+		left = "="*int(hwidth)
+		right = "="*int(ceil(hwidth))
+		print '{:s} ERROR IN {:s} {:s}'.format(left, key, right)
+		# Print body
+		print "\n".join(body)
+		# Prepare footer
+		print "="*width, "\n"
+		
+		
+print "All output files have been compared!"
