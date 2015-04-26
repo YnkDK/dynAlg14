@@ -13,9 +13,9 @@
 #include <fstream>
 
 const std::string outputDir("output/"); 
-const std::string insSuffix("ins.stat");
-const std::string delSuffix("del.stat");
-const std::string querySuffix("query.stat");
+const std::string insSuffix("-ins.stat");
+const std::string delSuffix("-del.stat");
+const std::string querySuffix("-query.stat");
 const std::string queryOutSuffix(".out");
 
 void Performance::run(
@@ -34,7 +34,7 @@ void Performance::run(
 	long long cpuClock;
 	for(auto &alg : algs) {
 		const char* name = alg->get_name();
-		std::string strName(name, 255);
+		std::string strName(name, strlen(name));
 		std::ofstream queryOutFile(outputDir + output_prefix + strName + queryOutSuffix);
 		for (auto &change : changes) {
 			switch(change.type) {
@@ -87,6 +87,11 @@ void Performance::run(
 				break;
 			default:
 				std::cout << "ERROR!!" << std::endl;
+				// Close all files
+				queryOutFile.close();
+				insFile.close();
+				delFile.close();
+				queryFile.close();
 				return;
 			}
 		}
