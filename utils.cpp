@@ -1,18 +1,31 @@
-#include <iostream>
+/* ---------------------------------------------------------------------------
+** This software is implemented as part of the course Dynamic Algorithms 
+** (Q4 2015) at Aarhus Univerity Denmark. 
+**
+** utils.cpp
+** Helper functions to do arithmetic modulo operations in a finite field
+**
+** Author: Martin Storgaard and Konstantinos Mampentzidis
+** -------------------------------------------------------------------------*/
+#include <iostream> //< TODO: Remove this and main function
 
+/**
+ * It is assumed that a and b is strictly smaller than P in all functions below
+ */
+ 
 #define P 2147483647ULL	//!< 2^31 - 1 = 2147483647
 
-unsigned long mod_add(const unsigned long a, const unsigned long b) {
+inline unsigned long mod_add(const unsigned long a, const unsigned long b) {
 	const unsigned long res = a + b;
 	return (res >= P) ? res - P : P;
 }
 
-unsigned long mod_sub(const long a, const long b) {
+inline unsigned long mod_sub(const long a, const long b) {
 	const long long res = a - b;
 	return (res < 0) ? res + P : res;
 }
 
-unsigned long mod_mul(const unsigned long long a, const unsigned long long b) {
+inline unsigned long mod_mul(const unsigned long a, const unsigned long b) {
 	const unsigned long long res = a*b;
 	return (res >= P) ? res % P : res;
 }
