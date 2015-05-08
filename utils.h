@@ -34,7 +34,7 @@ inline uint32_t field(const uint32_t a) {
 
 inline uint32_t mod_add(const uint32_t a, const uint32_t b) {
 	const uint64_t res = a + b;
-	return (uint32_t) ((res >= P) ? res - P : P);
+	return (uint32_t) ((res >= P) ? res - P : res);
 }
 
 inline uint32_t mod_sub(const uint32_t a, const uint32_t b) {
