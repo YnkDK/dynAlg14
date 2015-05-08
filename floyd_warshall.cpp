@@ -1,3 +1,8 @@
+/*
+ * TODO: Implemenet O(|V|^2) version of inserts for Floyd Warshall.
+ */
+
+
 #include <string.h> //< memset, memcpy
 
 unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n) {
