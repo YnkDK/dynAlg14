@@ -36,3 +36,6 @@
 bin/*
 *.png
 
+# Ignore idea files
+.idea
+

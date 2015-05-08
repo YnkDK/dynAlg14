@@ -11,7 +11,7 @@
 #include <random>	//< Mersenne twister random number engine
 
 #ifndef P
-	#define P 2147483647ULL	//!< 2^31 - 1 = 2147483647
+#define P 2147483647UL    //!< 2^31 - 1 = 2147483647
 #endif
 #ifndef SEED
 	#define SEED 42
@@ -29,29 +29,31 @@ inline uint32_t next() {
  */
  
 inline uint32_t field(const uint32_t a) {
-	return (a >= P) ? a % P : a;
+	return (uint32_t) ((a >= P) ? a % P : a);
 }
 
 inline uint32_t mod_add(const uint32_t a, const uint32_t b) {
 	const uint64_t res = a + b;
-	return (res >= P) ? res - P : P;
+	return (uint32_t) ((res >= P) ? res - P : P);
 }
 
 inline uint32_t mod_sub(const uint32_t a, const uint32_t b) {
 	const int64_t res = a - b;
-	return (res < 0) ? res + P : res;
+	return (uint32_t) ((res < 0) ? res + P : (uint32_t) res);
 }
 
 inline uint32_t mod_mul(const uint32_t a, const uint32_t b) {
 	const uint64_t res = a*b;
-	return (res >= P) ? res % P : res;
+	return (uint32_t) ((res >= P) ? res % P : res);
 }
 
 /**
  *	Inspired by http://rosettacode.org/wiki/Modular_inverse#C.2B.2B
  *	TODO: Might be optimized
  */
-inline uint32_t mod_inv(uint32_t a) {
+inline uint32_t mod_inv(const uint32_t n) {
+	int32_t a;
+	a = n;
 	int32_t b = P;
 	
 	int32_t t, q;
@@ -67,5 +69,5 @@ inline uint32_t mod_inv(uint32_t a) {
 		x1 = t;
 	}
 	if (x1 < 0) x1 += P;
-	return x1;
+	return (uint32_t) x1;
 }
