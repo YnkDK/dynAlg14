@@ -55,8 +55,8 @@ int main(int argc, const char* argv[]) {
 	read_input(inputFile.c_str(), change_sequence);
 	
 	// Format the output prefix
-	unsigned int idx = inputFile.find("change");
-	unsigned int idxEnd = inputFile.find(".txt");
+	unsigned long idx = inputFile.find("change");
+	unsigned long idxEnd = inputFile.find(".txt");
 	std::string output_prefix = inputFile.substr(idx, idxEnd-idx);
 	perf->run(algorithms, change_sequence, output_prefix);
 
