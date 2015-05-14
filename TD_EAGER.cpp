@@ -22,7 +22,10 @@ void TD_EAGER::init(int n) {
 	//initialize the inverse matrix to be I-A, A is zero at first at the moment so I-A = I.
 	inverse_matrix = new uint32_t[n*n];
 	memset(inverse_matrix, 0, n*n*sizeof(uint32_t));
-	for(int i=0;i<n;i++) inverse_matrix[i*n + i] = 1;
+	for(int i=0;i<n;i++) {
+        inverse_matrix[i*n + i] = 1;
+        adjacency_matrix[i*n + i] = 1;
+    }
 	//initialize the counter to be 0 since no edges are part of the transitive closure within a graph with 0
 	//edges.
 	count = 0;
@@ -82,9 +85,6 @@ void TD_EAGER::ins(int i, int j) {
 	uint32_t v = next();
 	adjacency_matrix[i*n + j] = v;
 	updateInverseMatrix(i,j, v);
-	helloWorldWhereAreYou(adjacency_matrix, n);
-	helloWorldWhereAreYou(inverse_matrix, n);
-	exit(0);
 }
 
 void TD_EAGER::del(int i, int j) {

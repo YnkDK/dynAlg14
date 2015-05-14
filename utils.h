@@ -40,8 +40,8 @@ inline uint32_t mod_add(const uint32_t a, const uint32_t b) {
 	return (uint32_t) ((res >= P) ? res - P : res);
 }
 
-inline uint32_t mod_sub(const uint32_t a, const uint32_t b) {
-	const int64_t res = a - b;
+inline uint32_t mod_sub(const int64_t a, const int64_t b) {
+	const int64_t res = a -  b;
 	return (uint32_t) ((res < 0) ? res + P : (uint32_t) res);
 }
 
@@ -79,13 +79,19 @@ inline uint32_t mod_inv(const uint32_t n) {
 	return (uint32_t) x1;
 }
 
-void helloWorldWhereAreYou(uint32_t *matrix, int n) {
+inline void helloWorldWhereAreYou(uint32_t *matrix, int n) {
+    std::cout << "{";
 	for(int i = 0; i < n; i++) {
-		for(int j = 0; j < n; j++) {
-			std::cout << matrix[i*n + j] << " ";
+        std::cout << "{";
+		for(int j = 0; j < n-1; j++) {
+			std::cout << matrix[i*n + j] << ",";
 		}
-		std::cout << std::endl;
+		std::cout << matrix[i*n + n-1]<< "}";
+        if(i < n-1) {
+            std::cout << ",";
+        }
 	}
+    std::cout << "}" << std::endl;
 }
 
 #endif
