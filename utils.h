@@ -35,7 +35,7 @@ inline uint32_t field(const uint32_t a) {
 	return (uint32_t) ((a >= P) ? a % P : a);
 }
 
-inline uint32_t mod_add(const uint32_t a, const uint32_t b) {
+inline uint32_t mod_add(const uint64_t a, const uint64_t b) {
 	const uint64_t res = a + b;
 	return (uint32_t) ((res >= P) ? res - P : res);
 }
@@ -45,7 +45,7 @@ inline uint32_t mod_sub(const int64_t a, const int64_t b) {
 	return (uint32_t) ((res < 0) ? res + P : (uint32_t) res);
 }
 
-inline uint32_t mod_mul(const uint32_t a, const uint32_t b) {
+inline uint32_t mod_mul(const uint64_t a, const uint64_t b) {
 	const uint64_t res = a*b;
 	return (uint32_t) ((res >= P) ? res % P : res);
 }
@@ -58,12 +58,12 @@ inline uint32_t mod_inv(const uint32_t n) {
     if(n == 1) {
         return 1;
     }
-	int32_t a;
+	int64_t a;
 	a = n;
-	int32_t b = P;
+	int64_t b = P;
 	
-	int32_t t, q;
-	int32_t x0 = 0, x1 = 1;
+	int64_t t, q;
+	int64_t x0 = 0, x1 = 1;
 	while (a > 1) {
 		q = a / b;
 		
@@ -79,7 +79,7 @@ inline uint32_t mod_inv(const uint32_t n) {
 	return (uint32_t) x1;
 }
 
-inline void helloWorldWhereAreYou(uint32_t *matrix, int n) {
+inline void printMatrix(uint32_t *matrix, int n) {
     std::cout << "{";
 	for(int i = 0; i < n; i++) {
         std::cout << "{";
