@@ -85,10 +85,10 @@ void TD_EAGER::ins(int i, int j) {
 	uint32_t v = next();
 	adjacency_matrix[i*n + j] = v;
 	updateInverseMatrix(i,j, v);
-    cout << "INSERT" << endl;
-    printMatrix(adjacency_matrix, n);
-    printMatrix(inverse_matrix, n);
-    cout << endl << endl;
+	/*cout << "INSERT" << endl;
+	printMatrix(adjacency_matrix, n);
+	printMatrix(inverse_matrix, n);
+	cout << endl << endl;*/
 }
 
 void TD_EAGER::del(int i, int j) {
