@@ -7,12 +7,14 @@
 **
 ** Author: Martin Storgaard and Konstantinos Mampentzidis
 ** -------------------------------------------------------------------------*/
+#ifndef UTILS
+#define UTILS
 #include <stdint.h> //< uint32_t uint64_t
 #include <random>	//< Mersenne twister random number engine
 #include <iostream>
 
 #ifndef P
-#define P 2147483647UL    //!< 2^31 - 1 = 2147483647
+	#define P 2147483647UL    //!< 2^31 - 1 = 2147483647
 #endif
 #ifndef SEED
 	#define SEED 42
@@ -76,3 +78,14 @@ inline uint32_t mod_inv(const uint32_t n) {
 	if (x1 < 0) x1 += P;
 	return (uint32_t) x1;
 }
+
+void helloWorldWhereAreYou(uint32_t *matrix, int n) {
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < n; j++) {
+			std::cout << matrix[i*n + j] << " ";
+		}
+		std::cout << std::endl;
+	}
+}
+
+#endif
