@@ -17,7 +17,7 @@
 	#define P 2147483647UL    //!< 2^31 - 1 = 2147483647
 #endif
 #ifndef SEED
-	#define SEED 42
+	#define SEED 4
 #endif
 
 static std::mt19937 mersenne_twister_ (SEED);
@@ -53,7 +53,7 @@ inline uint32_t mod_mul(const uint64_t a, const uint64_t b) {
 /**
  *	Inspired by http://rosettacode.org/wiki/Modular_inverse#C.2B.2B
  *	TODO: Might be optimized
- */
+
 inline uint32_t mod_inv(const uint32_t n) {
     if(n == 1) {
         return 1;
@@ -61,12 +61,12 @@ inline uint32_t mod_inv(const uint32_t n) {
 	int64_t a;
 	a = n;
 	int64_t b = P;
-	
+
 	int64_t t, q;
 	int64_t x0 = 0, x1 = 1;
 	while (a > 1) {
 		q = a / b;
-		
+
 		t = b;
 		b = a % b;
 		a = t;
@@ -78,7 +78,34 @@ inline uint32_t mod_inv(const uint32_t n) {
 	if (x1 < 0) x1 += P;
 	return (uint32_t) x1;
 }
+*/
+inline uint32_t mod_inv(int64_t a) {
+    int64_t x, y, u, v, q, b, r, n, m;
+    b = P;
+    x = 0;
+    y = 1;
 
+    u = 1;
+    v = 0;
+    while(a != 0) {
+        q = b/a;
+        r = b % a;
+
+        m = x - u * q;
+        n = y - v * q;
+
+        b = a;
+        a = r;
+        x = u;
+        y = v;
+        u = m;
+        v = n;
+    }
+    if(x < 0) {
+        return (uint32_t) (x + P);
+    }
+    return (uint32_t) x;
+}
 inline void printMatrix(uint32_t *matrix, int n) {
     std::cout << "{";
 	for(int i = 0; i < n; i++) {
