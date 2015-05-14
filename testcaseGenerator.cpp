@@ -34,11 +34,10 @@ int main(int argc, const char* argv[]){
 	static std::mt19937 s(2134);
 	static std::uniform_int_distribution<int> dist(0, n-1);
 
-	int i;
 	set< pair<int, int> > mySet;
 	if(opt == "inserts"){
 		
-		for(i=0;i<n;i++){
+		while(mySet.size()!=(size_t)n){
 			pair<int,int> tmp;
 			tmp.first = dist(s);
 			tmp.second = dist(s);
@@ -56,7 +55,7 @@ int main(int argc, const char* argv[]){
 	
 	if(opt == "deletes"){
 		
-		for(i=0;i<n;i++){
+		while(mySet.size()!=(size_t)n){
 			pair<int,int> tmp;
 			tmp.first = dist(s);
 			tmp.second = dist(s);
