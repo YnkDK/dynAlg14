@@ -39,3 +39,6 @@ bin/*
 # Ignore idea files
 .idea
 
+# Ingore input/output
+output/*
+input/*
