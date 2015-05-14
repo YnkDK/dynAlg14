@@ -18,7 +18,7 @@ void TD_EAGER::init(int n) {
 	if(adjacency_matrix != NULL) delete[] adjacency_matrix;
 	this->n = n;
 	adjacency_matrix = new uint32_t[n*n];
-	memset(adjacency_matrix, false, n*n*sizeof(bool));
+	memset(adjacency_matrix, 0, n*n*sizeof(uint32_t));
 	//initialize the inverse matrix to be I-A, A is zero at first at the moment so I-A = I.
 	inverse_matrix = new uint32_t[n*n];
 	memset(inverse_matrix, 0, n*n*sizeof(uint32_t));
@@ -81,14 +81,14 @@ void TD_EAGER::updateInverseMatrix(int i, int j, uint32_t u)
 void TD_EAGER::ins(int i, int j) {
 	uint32_t v = next();
 	adjacency_matrix[i*n + j] = v;
-	cout << "Inserting (" << i << "," << j << ") with value " << v << endl;
 	updateInverseMatrix(i,j, v);
-
+	helloWorldWhereAreYou(adjacency_matrix, n);
+	helloWorldWhereAreYou(inverse_matrix, n);
+	exit(0);
 }
 
 void TD_EAGER::del(int i, int j) {
 	updateInverseMatrix(i, j, (uint32_t) (P - adjacency_matrix[i*n + j]));
-	cout << "Deleting(" << i << "," << j << ") with value " << adjacency_matrix[i*n + j] << " new value " << P - adjacency_matrix[i*n + j] << endl;
 	adjacency_matrix[i*n + j] = 0;
 	
 }
