@@ -8,7 +8,7 @@ using namespace std;
 
 void usage(){
 
-	cout<<"type ./file.out n [inserts, deletes, both]"<<endl;
+	cout<<"type ./bin/generator n [inserts, deletes, both]"<<endl;
 
 }
 
@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]){
 	
 	int n = atoi(argv[1]);
 	ofstream fout;
-	fout.open("test.txt",ios_base::out);
+	fout.open("input/test.txt",ios_base::out);
 	
 	fout<<"init("<<n<<")"<<endl;
 

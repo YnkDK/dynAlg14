@@ -7,3 +7,4 @@ main: *.cpp *.h
 	mkdir -p $(BIN)
 	mkdir -p output
 	g++ $(FLAGS) $(UTILS) $(TC) main.cpp -o $(BIN)/main
+	g++ $(FLAGS) testcaseGenerator.cpp -o $(BIN)/generator
