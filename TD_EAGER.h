@@ -21,7 +21,7 @@ private:
 	uint32_t *adjacency_matrix; //this stores all the inserts/deletes that have happened
 	uint32_t *inverse_matrix; //this stores the inverse that we want to maintain
 	int n;
-	int count;
+	uint32_t count;
 	void updateInverseMatrix(int i, int j, uint32_t u);
 	
 public:
