@@ -24,15 +24,6 @@
 
 const std::string inputPath ("input/");
 
-void print_matrix(bool *matrix, unsigned int n) {
-	unsigned int i, j;
-	for(i = 0; i < n; i++) {
-		for(j = 0; j < n; j++) {
-			std::cout << matrix[i*n + j] << " ";
-		}
-		std::cout << std::endl;
-	}
-}
 
 int main(int argc, const char* argv[]) {
 	if(argc != 2) {
