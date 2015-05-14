@@ -27,7 +27,8 @@ int main(int argc, const char* argv[]){
 	
 	int n = atoi(argv[1]);
 	ofstream fout;
-	fout.open("input/test.txt",ios_base::out);
+	string fname = "input/changeFile"+to_string(n)+".txt";
+	fout.open(fname,ios_base::out);
 	
 	fout<<"init("<<n<<")"<<endl;
 
