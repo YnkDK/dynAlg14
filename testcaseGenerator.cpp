@@ -8,24 +8,25 @@ using namespace std;
 
 void usage(){
 
-	cout<<"type ./bin/generator n [inserts, deletes, both]"<<endl;
+	cout<<"type ./bin/generator n m [inserts, deletes, both]"<<endl;
 
 }
 
 int main(int argc, const char* argv[]){
 
-	if(argc != 3){
+	if(argc != 4){
 		usage();
 		return 1;
 	}
 	
-	string opt = argv[2];
+	string opt = argv[3];
 	if(opt != "inserts" && opt!="deletes" && opt!="both"){
 		usage();
 		return 1;
 	}
 	
 	int n = atoi(argv[1]);
+	size_t m = atoi(argv[2]);
 	ofstream fout;
 	string fname = "input/changeFile"+to_string(n)+".txt";
 	fout.open(fname,ios_base::out);
@@ -38,7 +39,7 @@ int main(int argc, const char* argv[]){
 	set< pair<int, int> > mySet;
 	if(opt == "inserts"){
 		
-		while(mySet.size()!=(size_t)n){
+		while(mySet.size()!= m){
 			pair<int,int> tmp;
 			tmp.first = dist(s);
 			tmp.second = dist(s);
@@ -56,7 +57,7 @@ int main(int argc, const char* argv[]){
 	
 	if(opt == "deletes"){
 		
-		while(mySet.size()!=(size_t)n){
+		while(mySet.size()!=m){
 			pair<int,int> tmp;
 			tmp.first = dist(s);
 			tmp.second = dist(s);
