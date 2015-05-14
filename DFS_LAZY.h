@@ -2,9 +2,9 @@
 ** This software is implemented as part of the course Dynamic Algorithms 
 ** (Q4 2015) at Aarhus Univerity Denmark. 
 **
-** FW_EAGER.h
-** Implementation of a trivial eager dynamic algorithm for dynamic transitive closure
-** based on the Floyd-Warshall algorithm.
+** DFS_LAZY.h
+** Implementation of a trivial lazy dynamic algorithm for dynamic transitive closure
+** based on the DFS approach.
 **
 ** Author: Martin Storgaard and Konstantinos Mampentzidis
 ** -------------------------------------------------------------------------*/
