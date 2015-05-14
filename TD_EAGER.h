@@ -18,7 +18,7 @@
 
 class TD_EAGER : public TC {
 private:
-	bool *adjacency_matrix; //this stores all the inserts/deletes that have happened
+	uint32_t *adjacency_matrix; //this stores all the inserts/deletes that have happened
 	uint32_t *inverse_matrix; //this stores the inverse that we want to maintain
 	int n;
 	int count;
