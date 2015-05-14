@@ -9,6 +9,7 @@
 ** -------------------------------------------------------------------------*/
 #include <stdint.h> //< uint32_t uint64_t
 #include <random>	//< Mersenne twister random number engine
+#include <iostream>
 
 #ifndef P
 #define P 2147483647UL    //!< 2^31 - 1 = 2147483647
@@ -34,7 +35,7 @@ inline uint32_t field(const uint32_t a) {
 
 inline uint32_t mod_add(const uint32_t a, const uint32_t b) {
 	const uint64_t res = a + b;
-	return (uint32_t) ((res >= P) ? res - P : P);
+	return (uint32_t) ((res >= P) ? res - P : res);
 }
 
 inline uint32_t mod_sub(const uint32_t a, const uint32_t b) {
@@ -52,6 +53,9 @@ inline uint32_t mod_mul(const uint32_t a, const uint32_t b) {
  *	TODO: Might be optimized
  */
 inline uint32_t mod_inv(const uint32_t n) {
+    if(n == 1) {
+        return 1;
+    }
 	int32_t a;
 	a = n;
 	int32_t b = P;
@@ -67,6 +71,7 @@ inline uint32_t mod_inv(const uint32_t n) {
 		t = x0;
 		x0 = x1 - q * x0;
 		x1 = t;
+
 	}
 	if (x1 < 0) x1 += P;
 	return (uint32_t) x1;
