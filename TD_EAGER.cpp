@@ -26,58 +26,62 @@ void TD_EAGER::init(int n) {
         inverse_matrix[i*n + i] = 1;
         adjacency_matrix[i*n + i] = 1;
     }
-	//initialize the counter to be 0 since no edges are part of the transitive closure within a graph with 0
-	//edges.
-	count = 0;
+	//initialize the counter to be n since all vertices can reach it self
+	count = (uint32_t) n;
 }
 
-void TD_EAGER::updateInverseMatrix(int i, int j, uint32_t u)
-{
-	uint32_t v = 1;
+void TD_EAGER::sherman_morrison(int i, int j, uint32_t u) {
+	// We do not need v, since it is only a multiplication by 1
+	//uint32_t v = 1;
 	int k,m;
 	//find (A^(-1)*u) => pick i-th column of A^(-1) and multiply every value by u
 	uint32_t *a = new uint32_t[n];
 	for(k=0;k<n;k++)
 		a[k] = mod_mul(inverse_matrix[k*n+i],u);
-	
-	//find (v^T*A^(-1)) => pick j-th row of A^(-1) and multiply every value by v
-	uint32_t *b = new uint32_t[n];
-	for(k=0;k<n;k++)
-		b[k] = mod_mul(inverse_matrix[j*n+k],v);
-	
-	//find v^T*A^(-1)*u
-	uint32_t c = 0;
-	for(k=0;k<n;k++)
-		c = mod_add(c, mod_mul(a[k],b[k]));
-	
-	//find the denominator of sherman morisson formula
-	uint32_t d = mod_add(c,1);
-	
-	if(d == 0){
+
+	uint32_t *b = &inverse_matrix[j*n];
+
+	//find 1 + v^T*A^(-1)*u - simply take the i'th entry and multiply by u
+	uint32_t c = mod_add(1, mod_mul(u,b[i]));
+
+	// Check that we do not divide by 0
+	if(c == 0){
+		// TODO: Use a better solutuon than simply exit!
 		std::cout<<"Division by zero!!!!!!!!"<<std::endl;
 		exit(1);
 	}
-	
-	//find the nominator of sherman morisson formula and divide with the denominator at the same time.
-	uint32_t *e = new uint32_t[n*n];
-	for(k=0;k<n;k++)
-		for(m=0;m<n;m++)
-			e[k*n+m] = mod_mul(mod_inv(d),mod_mul(a[k],b[m]));
-	
-	//update the inverse matrix and counter
+	c = mod_inv(c);
 	count = 0;
-	for(k=0;k<n;k++){
-		for(m=0;m<n;m++){
-			int index = k*n+m;
-			inverse_matrix[index] = mod_sub(inverse_matrix[index], e[index]);
-			if(inverse_matrix[index]!=0) count++;
+	// Be smart, do not multiply by 1
+	if(c != 1) {
+		//find the nominator of sherman morisson formula and divide with the denominator at the same time.
+		uint32_t *e = new uint32_t[n*n];
+		for(k=0;k<n;k++)
+			for(m=0;m<n;m++)
+				e[k*n+m] = mod_mul(c, mod_mul(a[k],b[m]));
+
+		//update the inverse matrix and counter
+		for(k=0;k<n;k++){
+			for(m=0;m<n;m++){
+				int index = k*n+m;
+				inverse_matrix[index] = mod_sub(inverse_matrix[index], e[index]);
+				if(inverse_matrix[index]!=0) count++;
+			}
+		}
+		delete[] e;
+	} else {
+		// We do not need to multiply by 1
+		// Calculate A^-1 - (fraction)
+		for(k=0;k<n;k++){
+			for(m=0;m<n;m++){
+				int index = k*n+m;
+				inverse_matrix[index] = mod_sub(inverse_matrix[index], mod_mul(a[k],b[m]));
+				if(inverse_matrix[index]!=0) count++;
+			}
 		}
 	}
-		
-	delete[] a;
-	delete[] b;
-	delete[] e;
 
+	delete[] a;
 }
 
 
@@ -86,121 +90,17 @@ void TD_EAGER::ins(int i, int j) {
 	adjacency_matrix[i*n + j] = u;
 	
 	//update the inverse matrix
+	sherman_morrison(i, j, u);
 	
-	uint32_t v = 1;
-	int k,m;
-	//find (A^(-1)*u) => pick i-th column of A^(-1) and multiply every value by u
-	uint32_t *a = new uint32_t[n];
-	for(k=0;k<n;k++)
-		a[k] = mod_mul(inverse_matrix[k*n+i],u);
-	
-	//find (v^T*A^(-1)) => pick j-th row of A^(-1) and multiply every value by v
-	uint32_t *b = new uint32_t[n];
-	for(k=0;k<n;k++)
-		b[k] = mod_mul(inverse_matrix[j*n+k],v);
-	
-	//find v^T*A^(-1)*u
-	uint32_t c = mod_mul(u,b[i]);/*
-	for(k=0;k<n;k++){
-		if(k == i)
-			c = mod_add(c, mod_mul(u,b[k]));
-		else c = mod_add(c,b[k]);
-	}
-	*/
-	//find the denominator of sherman morisson formula
-	uint32_t d = mod_add(c,1);
-	
-	if(d == 0){
-		std::cout<<"Division by zero!!!!!!!!"<<std::endl;
-		exit(1);
-	}
-	
-	//find the nominator of sherman morisson formula and divide with the denominator at the same time.
-	uint32_t *e = new uint32_t[n*n];
-	for(k=0;k<n;k++)
-		for(m=0;m<n;m++)
-			e[k*n+m] = mod_mul(mod_inv(d),mod_mul(a[k],b[m]));
-	
-	//update the inverse matrix and counter
-	count = 0;
-	for(k=0;k<n;k++){
-		for(m=0;m<n;m++){
-			int index = k*n+m;
-			inverse_matrix[index] = mod_sub(inverse_matrix[index], e[index]);
-			if(inverse_matrix[index]!=0) count++;
-		}
-	}
-		
-	delete[] a;
-	delete[] b;
-	delete[] e;
-	/*cout << "INSERT" << endl;
-	printMatrix(adjacency_matrix, n);
-	printMatrix(inverse_matrix, n);
-	cout << endl << endl;*/
 }
 
 void TD_EAGER::del(int i, int j) {
-	//update inverse matrix
-	
-	uint32_t u = adjacency_matrix[i*n + j];
+	// This is the same as inserting -u = P - u in the Z_P field
+	sherman_morrison(i, j, (uint32_t) (P-adjacency_matrix[i*n + j]));
 	adjacency_matrix[i*n + j] = 0;
-
-	//update the inverse matrix
-	
-	uint32_t v = 1;
-	int k,m;
-	//find (A^(-1)*u) => pick i-th column of A^(-1) and multiply every value by u
-	uint32_t *a = new uint32_t[n];
-	for(k=0;k<n;k++)
-		a[k] = mod_mul(inverse_matrix[k*n+i],u);
-	
-	//find (v^T*A^(-1)) => pick j-th row of A^(-1) and multiply every value by v
-	uint32_t *b = new uint32_t[n];
-	for(k=0;k<n;k++)
-		b[k] = mod_mul(inverse_matrix[j*n+k],v);
-	
-	//find v^T*A^(-1)*u
-	uint32_t c = mod_mul(u,b[i]);
-	/*for(k=0;k<n;k++){
-		if(k == i)
-			c = mod_add(c, mod_mul(u,b[k]));
-		else c = mod_add(c,b[k]);
-	}*/
-	
-	//find the denominator of sherman morisson formula
-	uint32_t d = mod_sub(1,c);
-	
-	if(d == 0){
-		std::cout<<"Division by zero!!!!!!!!"<<std::endl;
-		exit(1);
-	}
-	
-	//find the nominator of sherman morisson formula and divide with the denominator at the same time.
-	uint32_t *e = new uint32_t[n*n];
-	for(k=0;k<n;k++)
-		for(m=0;m<n;m++)
-			e[k*n+m] = mod_mul(mod_inv(d),mod_mul(a[k],b[m]));
-	
-	//update the inverse matrix and counter
-	count = 0;
-	for(k=0;k<n;k++){
-		for(m=0;m<n;m++){
-			int index = k*n+m;
-			inverse_matrix[index] = mod_add(inverse_matrix[index], e[index]);
-			if(inverse_matrix[index]!=0) count++;
-		}
-	}
-		
-	delete[] a;
-	delete[] b;
-	delete[] e;
-    /*cout << "DELETE" << endl;
-    printMatrix(adjacency_matrix, n);
-    printMatrix(inverse_matrix, n);
-    cout << endl << endl;*/
 }
 
 unsigned int TD_EAGER::query() {
+	// Oh, we were eager, wasn't we?
 	return count;
 }
