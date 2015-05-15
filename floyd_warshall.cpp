@@ -56,9 +56,9 @@ unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n, bo
 			}
 		}
 	}
-	
+	// TODO: Fix memory leak!
 	//delete[] current;
-	delete[] previous;
+	//delete[] previous;
 	// The total number of pairs that is part of the transitive closure
 	return count;
 }
