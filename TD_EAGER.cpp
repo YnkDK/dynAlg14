@@ -28,6 +28,11 @@ void TD_EAGER::init(int n) {
     }
 	//initialize the counter to be n since all vertices can reach it self
 	count = (uint32_t) n;
+
+	xs = new uint32_t[n*n];
+	for(int i = 0; i < n*n; i++) {
+		xs[i] = next();
+	}
 }
 
 void TD_EAGER::sherman_morrison(int i, int j, uint32_t u) {
@@ -86,7 +91,7 @@ void TD_EAGER::sherman_morrison(int i, int j, uint32_t u) {
 
 
 void TD_EAGER::ins(int i, int j) {
-	uint32_t u = next();
+	uint32_t u = xs[i*n + j];
 	adjacency_matrix[i*n + j] = u;
 	
 	//update the inverse matrix

@@ -20,6 +20,7 @@ class TD_EAGER : public TC {
 private:
 	uint32_t *adjacency_matrix; //this stores all the inserts/deletes that have happened
 	uint32_t *inverse_matrix; //this stores the inverse that we want to maintain
+	uint32_t *xs;
 	int n; // Number of vertices
 	uint32_t count; // Number of transitive closures
 	void sherman_morrison(int i, int j, uint32_t u); // Implementation of the Sherman-Morrison formula
