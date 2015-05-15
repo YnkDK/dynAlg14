@@ -5,9 +5,9 @@
 
 #include <string.h> //< memset, memcpy
 
-unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n) {
+unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n, bool *current) {
 	const unsigned int SIZE = n*n; //< Size of matrix
-	bool *current = new bool[SIZE]; //< Temp array stating if there is a path from (i,j) 
+	//bool *current = new bool[SIZE]; //< Temp array stating if there is a path from (i,j) 
 	bool *previous = new bool[SIZE]; //< Temp array stating if there is a path from (i,j)
 	unsigned int i, j, k; //< Indices for the loop
 	unsigned int entry, col; //< Position in matrix
@@ -57,7 +57,7 @@ unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n) {
 		}
 	}
 	
-	delete[] current;
+	//delete[] current;
 	delete[] previous;
 	// The total number of pairs that is part of the transitive closure
 	return count;
