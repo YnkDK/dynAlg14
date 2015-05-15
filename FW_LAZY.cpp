@@ -28,5 +28,6 @@ void FW_LAZY::del(int i, int j) {
 }
 
 unsigned int FW_LAZY::query() {
-	return transitive_closure(adjacency_matrix, cols);
+	return 1;
+	//return transitive_closure(adjacency_matrix, cols);
 }

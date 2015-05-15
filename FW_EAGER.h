@@ -20,6 +20,7 @@ private:
 	bool *adjacency_matrix;
 	unsigned int cols;
 	unsigned int count;
+	bool *current;
 	
 public:
 	const char* get_name() {

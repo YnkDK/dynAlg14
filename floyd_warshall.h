@@ -13,6 +13,6 @@
 #ifndef _FLOYD_WARSHALL_H
 #define _FLOYD_WARSHALL_H
 
-unsigned int transitive_closure(bool *adjacency_matrix, unsigned int n);
+unsigned int transitive_closure(bool *adjacency_matrix, unsigned int n, bool *current);
 
 #endif //_FLOYD_WARSHALL_H
