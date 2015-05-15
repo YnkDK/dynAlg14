@@ -35,9 +35,9 @@ int main(int argc, const char* argv[]) {
 	
 	// First define which algorithms to run
 	std::vector<TC*> algorithms = {
-		new FW_LAZY(),
+		//new FW_LAZY(),
 		new FW_EAGER(), 
-		new DFS_LAZY(),
+		//new DFS_LAZY(),
 		new DFS_EAGER(),
 		new TD_EAGER()
 	}; 
