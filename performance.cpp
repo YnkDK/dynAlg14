@@ -96,7 +96,6 @@ void Performance::run(
 			}
 		}
 		queryOutFile.close();
-		std::cout << std::endl;
 	}
 	insFile.close();
 	delFile.close();
