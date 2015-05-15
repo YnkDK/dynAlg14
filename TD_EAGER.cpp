@@ -100,10 +100,13 @@ void TD_EAGER::ins(int i, int j) {
 		b[k] = mod_mul(inverse_matrix[j*n+k],v);
 	
 	//find v^T*A^(-1)*u
-	uint32_t c = 0;
-	for(k=0;k<n;k++)
-		c = mod_add(c, mod_mul(a[k],b[k]));
-	
+	uint32_t c = mod_mul(u,b[i]);/*
+	for(k=0;k<n;k++){
+		if(k == i)
+			c = mod_add(c, mod_mul(u,b[k]));
+		else c = mod_add(c,b[k]);
+	}
+	*/
 	//find the denominator of sherman morisson formula
 	uint32_t d = mod_add(c,1);
 	
@@ -158,9 +161,12 @@ void TD_EAGER::del(int i, int j) {
 		b[k] = mod_mul(inverse_matrix[j*n+k],v);
 	
 	//find v^T*A^(-1)*u
-	uint32_t c = 0;
-	for(k=0;k<n;k++)
-		c = mod_add(c, mod_mul(a[k],b[k]));
+	uint32_t c = mod_mul(u,b[i]);
+	/*for(k=0;k<n;k++){
+		if(k == i)
+			c = mod_add(c, mod_mul(u,b[k]));
+		else c = mod_add(c,b[k]);
+	}*/
 	
 	//find the denominator of sherman morisson formula
 	uint32_t d = mod_sub(1,c);
