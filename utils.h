@@ -31,9 +31,9 @@ inline uint32_t next() {
 	return distribution_(mersenne_twister_);
 }
 
-
 /**
- * Prints an n x n matrix in Wolframalpha style
+ * Prints an n x n matrix in Wolframalpha style, e.g.
+ * {{1,2,3},{4,5,6},{7,8,9}}
  */
 inline void printMatrix(uint32_t *matrix, int n) {
 	std::cout << "{";
@@ -50,9 +50,9 @@ inline void printMatrix(uint32_t *matrix, int n) {
 	std::cout << "}" << std::endl;
 }
 
-/**
- * It is assumed that a and b is strictly smaller than P in all functions below
- */
+/*********************************************************************************
+ * It is assumed that a and b are strictly smaller than P in all functions below *
+ *********************************************************************************/
 
 /**
  * Since both a and b are in the field, then if a + b is larger than P,
@@ -82,34 +82,10 @@ inline uint32_t mod_mul(const uint64_t a, const uint64_t b) {
 }
 
 /**
- *	Inspired by http://rosettacode.org/wiki/Modular_inverse#C.2B.2B
- *	TODO: Might be optimized
-
-inline uint32_t mod_inv(const uint32_t n) {
-    if(n == 1) {
-        return 1;
-    }
-	int64_t a;
-	a = n;
-	int64_t b = P;
-
-	int64_t t, q;
-	int64_t x0 = 0, x1 = 1;
-	while (a > 1) {
-		q = a / b;
-
-		t = b;
-		b = a % b;
-		a = t;
-		t = x0;
-		x0 = x1 - q * x0;
-		x1 = t;
-
-	}
-	if (x1 < 0) x1 += P;
-	return (uint32_t) x1;
-}
-*/
+ * Find the miltiplicative inverse using the Extended Euclidean algorithm
+ *
+ * TODO: Might be optimized since P is a prime?
+ */
 inline uint32_t mod_inv(int64_t a) {
     int64_t x, y, u, v, q, b, r, n, m;
     b = P;
