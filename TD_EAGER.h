@@ -20,14 +20,21 @@ class TD_EAGER : public TC {
 private:
 	uint32_t *adjacency_matrix; //this stores all the inserts/deletes that have happened
 	uint32_t *inverse_matrix; //this stores the inverse that we want to maintain
-	uint32_t *xs;
-	int n; // Number of vertices
-	uint32_t count; // Number of transitive closures
-	void sherman_morrison(int i, int j, uint32_t u); // Implementation of the Sherman-Morrison formula
+	uint32_t *xs; // The random numbers
+	uint32_t n; // Number of vertices
+	uint32_t count; // Number of reachable vertices for all vertices
+
+	/**
+	 * Implementation of the Sherman-Morrison formula to maintain (A-ei*u*ej^T)^(-1)
+	 * @param i Row index
+	 * @param j Column index
+	 * @param u The value to be used in the update
+	 */
+	void sherman_morrison(int i, int j, uint32_t u);
 	
 public:
 	const char* get_name() {
-		return "Truly dynamic";
+		return "Eager Sankowski";
 	}
 	
 	virtual void init(int n);
@@ -40,6 +47,8 @@ public:
 	
 	~TD_EAGER() {
 		if(adjacency_matrix != NULL) delete[] adjacency_matrix;
+		if(inverse_matrix != NULL) delete[] inverse_matrix;
+		if(xs != NULL) delete[] xs;
 	}
 };
 
