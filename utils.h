@@ -11,40 +11,71 @@
 #define UTILS
 #include <stdint.h> //< uint32_t uint64_t
 #include <random>	//< Mersenne twister random number engine
-#include <iostream>
+#include <iostream> //< std::cout and std::endl
 
 #ifndef P
-	#define P 2147483647UL    //!< 2^31 - 1 = 2147483647
+	#define P 2147483647    //!< 2^31 - 1 = 2147483647
 #endif
 #ifndef SEED
-	#define SEED 4
+	// Seed using random.org (https://goo.gl/xedsHM)
+	#define SEED 88479329
 #endif
 
 static std::mt19937 mersenne_twister_ (SEED);
 static std::uniform_int_distribution<uint32_t> distribution_(0, P - 1);
 
+/**
+ * Returns the next random unsigned integer within the field Z/pZ
+ */
 inline uint32_t next() {
 	return distribution_(mersenne_twister_);
+}
+
+
+/**
+ * Prints an n x n matrix in Wolframalpha style
+ */
+inline void printMatrix(uint32_t *matrix, int n) {
+	std::cout << "{";
+	for(int i = 0; i < n; i++) {
+		std::cout << "{";
+		for(int j = 0; j < n-1; j++) {
+			std::cout << matrix[i*n + j] << ",";
+		}
+		std::cout << matrix[i*n + n-1]<< "}";
+		if(i < n-1) {
+			std::cout << ",";
+		}
+	}
+	std::cout << "}" << std::endl;
 }
 
 /**
  * It is assumed that a and b is strictly smaller than P in all functions below
  */
- 
-inline uint32_t field(const uint32_t a) {
-	return (uint32_t) ((a >= P) ? a % P : a);
-}
 
+/**
+ * Since both a and b are in the field, then if a + b is larger than P,
+ * then a single subtraction suffice to bring the result back to the field
+ */
 inline uint32_t mod_add(const uint64_t a, const uint64_t b) {
 	const uint64_t res = a + b;
 	return (uint32_t) ((res >= P) ? res - P : res);
 }
 
+/**
+ * Since both a and b are in the field, then if a + b is negative,
+ * then a single addition suffice to bring the result back to the field
+ */
 inline uint32_t mod_sub(const int64_t a, const int64_t b) {
 	const int64_t res = a -  b;
 	return (uint32_t) ((res < 0) ? res + P : (uint32_t) res);
 }
 
+/**
+ * Since both a and b are in the field, then if a + b is larger than P,
+ * then we have to use modulo to bring the result back to the field
+ */
 inline uint32_t mod_mul(const uint64_t a, const uint64_t b) {
 	const uint64_t res = a*b;
 	return (uint32_t) ((res >= P) ? res % P : res);
@@ -106,19 +137,5 @@ inline uint32_t mod_inv(int64_t a) {
     }
     return (uint32_t) x;
 }
-inline void printMatrix(uint32_t *matrix, int n) {
-    std::cout << "{";
-	for(int i = 0; i < n; i++) {
-        std::cout << "{";
-		for(int j = 0; j < n-1; j++) {
-			std::cout << matrix[i*n + j] << ",";
-		}
-		std::cout << matrix[i*n + n-1]<< "}";
-        if(i < n-1) {
-            std::cout << ",";
-        }
-	}
-    std::cout << "}" << std::endl;
-}
 
-#endif
+#endif // UTILS
