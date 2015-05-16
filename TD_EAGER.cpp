@@ -130,7 +130,7 @@ void TD_EAGER::ins(int i, int j) {
 
 void TD_EAGER::del(int i, int j) {
 	// This is the same as inserting -u = P - u in the Z_P field
-	sherman_morrison(i, j, (uint32_t) (P-adjacency_matrix[i*n + j]));
+	sherman_morrison(i, j, P - adjacency_matrix[i*n + j]);
     // P - u + u (mod P) = 0
 	adjacency_matrix[i*n + j] = 0;
 }
