@@ -55,18 +55,25 @@ class Jumper:
 		a path between the current node and the next node, a delete is issued,
 		otherwise a insert is issued.
 		"""
-		while True:
-			# Choose a random node different from the current node
-			next = choice(nodes)
-			if next != self.current_node:
-				break
+		try:
+			# Hide the tracks if possible
+			next = self.current_node.edges.pop()
+		except KeyError:
+			# No paths from here, make a new one
+			action = 'insert'
+			# No track to hide, try jump to another node
+			while True:
+				# Choose a random node different from the current node
+				next = choice(nodes)
+				if next != self.current_node:
+					break
 				
-		if next in self.current_node.edges:
-			print 'delete({:d},{:d})'.format(self.current_node.index, next.index)
-			self.current_node.edges.remove(next)
-		else:
-			print 'insert({:d},{:d})'.format(self.current_node.index, next.index)
 			self.current_node.edges.add(next)
+		else:
+			# We could hide some tracks
+			action = 'delete'
+		# Print the action
+		print "{:s}({:d},{:d})".format(action, self.current_node.index, next.index)
 		self.current_node = next
 
 # Get num_jumpers jumpers all starting in different nodes
