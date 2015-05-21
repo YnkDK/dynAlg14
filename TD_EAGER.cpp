@@ -25,8 +25,8 @@ void TD_EAGER::init(int n) {
     this->n = (uint32_t) n;
 
     // Allocate and initialize the adjacency matrix
-    adjacency_matrix = new uint32_t[n * n];
-    memset(adjacency_matrix, 0, n * n * sizeof(uint32_t));
+    adjacency_matrix = new bool[n * n];
+    memset(adjacency_matrix, false, n * n * sizeof(bool));
 
     // Allocate and initialize the adjacency matrix
     inverse_matrix = new uint32_t[n * n];
@@ -35,7 +35,7 @@ void TD_EAGER::init(int n) {
     // Compute I-A and (I-A)^(-1), i.e. I
     for (int i = 0; i < n; i++) {
         inverse_matrix[i * n + i] = 1;
-        adjacency_matrix[i * n + i] = 1;
+        adjacency_matrix[i * n + i] = true;
     }
     //initialize the counter to be n since all vertices can reach it self
     count = (uint32_t) n;
@@ -115,25 +115,23 @@ inline void TD_EAGER::sherman_morrison(int i, int j, uint32_t u) {
             }
         }
     }
-
     delete[] a;
 }
 
 
 void TD_EAGER::ins(int i, int j) {
     const uint32_t u = xs[i * n + j];
-    adjacency_matrix[i * n + j] = u;
+    adjacency_matrix[i * n + j] = true;
 
     //update the inverse matrix
     sherman_morrison(i, j, u);
-
 }
 
 void TD_EAGER::del(int i, int j) {
     // This is the same as inserting -u = P - u in the Z_P field
-    sherman_morrison(i, j, P - adjacency_matrix[i * n + j]);
+    sherman_morrison(i, j, P - xs[i * n + j]);
     // P - u + u (mod P) = 0
-    adjacency_matrix[i * n + j] = 0;
+    adjacency_matrix[i * n + j] = false;
 }
 
 unsigned int TD_EAGER::query() {
