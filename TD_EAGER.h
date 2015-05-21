@@ -14,11 +14,12 @@
 
 #include "TC.h"
 #include "utils.h"
+#include <stdint-gcc.h>
 #include <iostream>
 
 class TD_EAGER : public TC {
 private:
-	uint32_t *adjacency_matrix; //this stores all the inserts/deletes that have happened
+	bool *adjacency_matrix; //this stores all the inserts/deletes that have happened
 	uint32_t *inverse_matrix; //this stores the inverse that we want to maintain
 	uint32_t *xs; // The random numbers
 	uint32_t n; // Number of vertices
