@@ -9,7 +9,8 @@
 ** -------------------------------------------------------------------------*/
 #ifndef UTILS
 #define UTILS
-#include <stdint.h> //< uint32_t uint64_t
+
+#include <stdint-gcc.h> //< uint32_t uint64_t
 #include <random>	//< Mersenne twister random number engine
 #include <iostream> //< std::cout and std::endl
 
