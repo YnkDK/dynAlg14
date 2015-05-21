@@ -40,6 +40,7 @@ public:
 	
 	~FW_EAGER() {
 		if(adjacency_matrix != NULL) delete[] adjacency_matrix;
+		if(current != NULL) delete[] current;
 	}
 };
 

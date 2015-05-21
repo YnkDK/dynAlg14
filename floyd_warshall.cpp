@@ -4,8 +4,10 @@
 
 
 #include <string.h> //< memset, memcpy
+#include <iostream>
+using namespace std;
 
-unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n, bool *current) {
+unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n, bool *current) {/*
 	const unsigned int SIZE = n*n; //< Size of matrix
 	//bool *current = new bool[SIZE]; //< Temp array stating if there is a path from (i,j) 
 	bool *previous = new bool[SIZE]; //< Temp array stating if there is a path from (i,j)
@@ -59,6 +61,23 @@ unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n, bo
 	// TODO: Fix memory leak!
 	//delete[] current;
 	//delete[] previous;
-	// The total number of pairs that is part of the transitive closure
+	*/
+	size_t i,j,k;
+	const unsigned int SIZE = n*n; //< Size of matrix
+	memset( current, false, SIZE*sizeof(bool));
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			current[i*n+j] = adjacency_matrix[i*n+j];
+	
+	for(k=0;k<n;k++){
+		current[k*n+k] = true;
+		for(i=0;i<n;i++)
+			for(j=0;j<n;j++)
+				current[i*n+j] = (current[i*n+j] | (current[i*n+k] & current[k*n+j]));
+	}
+	unsigned int count = 0;
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			if(current[i*n+j]) count++;	
 	return count;
 }
