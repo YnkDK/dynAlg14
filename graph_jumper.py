@@ -5,7 +5,8 @@
 	(Q4 2015) at Aarhus Univerity Denmark. 
 
 	graph_jumper.py
-	Creates J jumpers, each jumping a number of times around in a graph of size n
+	Creates J jumpers, each jumping a number of times around in a graph of size n,
+	i.e. there are J*(number of jumps) inserts/deletes and J queries.
 	
 	If a jumper jumps between two nodes without an edge, a new edge is inserted,
 	otherwise the existing edge is deleted. After all jumpers have jumped, then
@@ -35,9 +36,7 @@ class Node:
 	def __init__(self, index):
 		self.index = index
 		self.edges = set()
-
-# Create n nodes
-nodes = [Node(i) for i in xrange(n)]
+		
 
 class Jumper:
 	"""
@@ -51,9 +50,8 @@ class Jumper:
 	
 	def jump(self):
 		"""
-		Jumps to a random node (except for the current node). If there already was
-		a path between the current node and the next node, a delete is issued,
-		otherwise a insert is issued.
+		If the current node contains a edge to any other node, then the jumper uses that
+		edge (delete), otherwise a random jump to any other node is issued (insert)
 		"""
 		try:
 			# Hide the tracks if possible
@@ -76,6 +74,8 @@ class Jumper:
 		print "{:s}({:d},{:d})".format(action, self.current_node.index, next.index)
 		self.current_node = next
 
+# Create n nodes
+nodes = [Node(i) for i in xrange(n)]
 # Get num_jumpers jumpers all starting in different nodes
 jumpers = [Jumper(s) for s in sample(nodes, num_jumpers)]
 
