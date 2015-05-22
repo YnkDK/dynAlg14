@@ -36,6 +36,7 @@ public:
 		cols = -1;
 		count = -1;
 		adjacency_matrix = NULL;
+		current = NULL;
 	}
 	
 	~FW_EAGER() {

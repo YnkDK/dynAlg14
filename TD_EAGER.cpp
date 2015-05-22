@@ -15,6 +15,7 @@ void TD_EAGER::init(int n) {
     //initialize the adjacency matrix where we will store all the edges that are part of the graph
     //we need it in case our randomized algorithm fails (division by zero) to be able to reconstruct
     //the
+    int SIZE = n*n;
     if (adjacency_matrix != NULL) delete[] adjacency_matrix;
     if (inverse_matrix != NULL) delete[] inverse_matrix;
     if (xs != NULL) delete[] xs;
@@ -22,12 +23,12 @@ void TD_EAGER::init(int n) {
     this->n = (uint32_t) n;
 
     // Allocate and initialize the adjacency matrix
-    adjacency_matrix = new bool[n * n];
-    memset(adjacency_matrix, false, n * n * sizeof(bool));
+    adjacency_matrix = new bool[SIZE];
+    memset(adjacency_matrix, false, SIZE * sizeof(bool));
 
     // Allocate and initialize the adjacency matrix
-    inverse_matrix = new uint32_t[n * n];
-    memset(inverse_matrix, 0, n * n * sizeof(uint32_t));
+    inverse_matrix = new uint32_t[SIZE];
+    memset(inverse_matrix, 0, SIZE * sizeof(uint32_t));
 
     // Compute I-A and (I-A)^(-1), i.e. I
     for (int i = 0; i < n; i++) {
@@ -38,8 +39,8 @@ void TD_EAGER::init(int n) {
     count = (uint32_t) n;
 
     // Pre-compute random values
-    xs = new uint32_t[n * n];
-    for (int i = 0; i < n * n; i++) {
+    xs = new uint32_t[SIZE];
+    for (int i = 0; i < SIZE; i++) {
         xs[i] = next();
     }
 }

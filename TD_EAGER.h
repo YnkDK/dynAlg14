@@ -44,6 +44,9 @@ public:
 	virtual unsigned int query();
 	
 	TD_EAGER() {
+		adjacency_matrix = NULL;
+		inverse_matrix = NULL;
+		xs = NULL;
 	}
 	
 	~TD_EAGER() {

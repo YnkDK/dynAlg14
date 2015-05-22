@@ -14,6 +14,7 @@
 using namespace std;
 void FW_EAGER::init(int n) {
 	if(adjacency_matrix != NULL) delete[] adjacency_matrix;
+	if(current != NULL) delete[] current;
 	cols = n;
 	//count = n;
 	adjacency_matrix = new bool[n*n];
