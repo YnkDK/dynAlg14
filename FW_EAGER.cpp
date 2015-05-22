@@ -20,7 +20,7 @@ void FW_EAGER::init(int n) {
 	current = new bool[n*n];
 	memset(adjacency_matrix, false, n*n*sizeof(bool));
 	memset(current, false, n*n*sizeof(bool));
-	for(int k=0;k<cols;k++) current[k*cols+k] = true;
+	for(size_t k=0;k<cols;k++) current[k*cols+k] = true;
 }
 
 void FW_EAGER::ins(int i, int j) {
