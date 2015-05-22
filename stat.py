@@ -13,11 +13,12 @@
 """
 from pylab import plot, show, savefig, xlim, figure, \
                 hold, ylim, legend, boxplot, setp, axes, \
-                title, ylabel, xlabel, subplots_adjust, suptitle
+                title, ylabel, xlabel, subplots_adjust, suptitle, switch_backend
 
 from utils import get_test_cases, get_test_case
 from sys import argv
 import numpy as np
+switch_backend('TKAgg')
 # Built-in colors: Blue, Green, Red,
 # Cyan, Magenta, Yellow and Black
 colors = "bgrcmyk"
