@@ -11,9 +11,6 @@
 
 #include "TD_EAGER.h"
 
-
-using namespace std;
-
 void TD_EAGER::init(int n) {
     //initialize the adjacency matrix where we will store all the edges that are part of the graph
     //we need it in case our randomized algorithm fails (division by zero) to be able to reconstruct
@@ -62,7 +59,7 @@ inline void TD_EAGER::sherman_morrison(int i, int j, uint32_t u) {
         a[k] = mod_mul(inverse_matrix[k * n + i], u);
     }
     // v^T * A^(-1), i.e. multiply row j by 1
-    uint32_t *b = &inverse_matrix[j * n];
+    const uint32_t *b = &inverse_matrix[j * n];
 
     // find the value of the denominator 1 + v^T*A^(-1)*u
     uint32_t c = mod_add(1, mod_mul(u, b[i]));
@@ -120,6 +117,7 @@ inline void TD_EAGER::sherman_morrison(int i, int j, uint32_t u) {
 
 
 void TD_EAGER::ins(int i, int j) {
+    // Using xs in this way indicates that we actually store -x
     const uint32_t u = xs[i * n + j];
     adjacency_matrix[i * n + j] = true;
 
