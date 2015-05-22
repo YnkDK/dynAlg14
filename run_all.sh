@@ -1,6 +1,8 @@
 #!/bin/bash
 INPUT=input/*
+OUTPUT=output/*
 
+rm $OUTPUT
 for f in $INPUT
 do
 	echo "Running ./bin/main $f"
