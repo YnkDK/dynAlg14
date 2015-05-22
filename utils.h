@@ -13,6 +13,7 @@
 #include <stdint-gcc.h> //< uint32_t uint64_t
 #include <random>	//< Mersenne twister random number engine
 #include <iostream> //< std::cout and std::endl
+#include <cstdlib> //< ldiv and ldiv_t
 
 #ifndef P
 	#define P 2147483647    //!< 2^31 - 1 = 2147483647
@@ -83,9 +84,10 @@ inline uint32_t mod_mul(const uint64_t a, const uint64_t b) {
 }
 
 /**
- * Find the miltiplicative inverse using the Extended Euclidean algorithm
- *
- * TODO: Might be optimized since P is a prime?
+ * Find the multiplicative inverse using the Extended Euclidean algorithm.
+ * Based on Wikibooks:
+ * Algorithm Implementation/Mathematics/Extended Euclidean algorithm --- Wikibooks{,} The Free Textbook Project
+ * http://goo.gl/ccbmUE
  */
 inline uint32_t mod_inv(int64_t a) {
     int64_t x, y, u, v, q, b, r, n, m;
@@ -96,8 +98,9 @@ inline uint32_t mod_inv(int64_t a) {
     u = 1;
     v = 0;
     while(a != 0) {
-        q = b/a;
-        r = b % a;
+        std::ldiv_t div = std::ldiv(b, a);
+        q = div.quot;
+        r = div.rem;
 
         m = x - u * q;
         n = y - v * q;
