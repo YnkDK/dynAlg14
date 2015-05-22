@@ -85,13 +85,14 @@ inline uint32_t mod_mul(const uint64_t a, const uint64_t b) {
 
 /**
  * Find the multiplicative inverse using the Extended Euclidean algorithm.
- * Based on Wikibooks:
- * Algorithm Implementation/Mathematics/Extended Euclidean algorithm --- Wikibooks{,} The Free Textbook Project
+ * Based on Wikibooks, The Free Textbook Project:
+ * Algorithm Implementation/Mathematics/Extended Euclidean algorithm
  * http://goo.gl/ccbmUE
  */
 inline uint32_t mod_inv(int64_t a) {
     int64_t x, y, u, v, q, b, r, n, m;
     b = P;
+
     x = 0;
     y = 1;
 
