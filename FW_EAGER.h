@@ -33,8 +33,8 @@ public:
 	virtual unsigned int query();
 	
 	FW_EAGER() {
-		cols = -1;
-		count = -1;
+		cols = 0;
+		count = 0;
 		adjacency_matrix = NULL;
 		current = NULL;
 	}
