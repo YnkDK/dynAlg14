@@ -15,7 +15,7 @@ using namespace std;
 void FW_EAGER::init(int n) {
 	if(adjacency_matrix != NULL) delete[] adjacency_matrix;
 	if(current != NULL) delete[] current;
-	cols = n;
+	cols = (unsigned int) n;
 	//count = n;
 	adjacency_matrix = new bool[n*n];
 	current = new bool[n*n];
@@ -45,17 +45,42 @@ void FW_EAGER::ins(int i, int j) {
 				tmp1[m] |= tmp2[m];
 	}
 	count=0;
-	for(k=0;k<cols;k++) {
-		tmp1 = &current[k*cols];
-		for(m = 0; m < cols; ++m)
-			if(tmp1[m])
-				count = count + 1;
-	}
+    const size_t SIZE = cols*cols;
+	for(k = 0; k < SIZE; k++) {
+        count += current[k];
+    }
 }
 
 void FW_EAGER::del(int i, int j) {
 	adjacency_matrix[i*cols + j] = false;
-	count = transitive_closure(adjacency_matrix, cols, current);
+    size_t m, l, k;
+    const unsigned int SIZE = cols*cols; //< Size of matrix
+    const unsigned int n = cols;
+    bool *tmp1, *tmp2;
+    /*
+    memset( current, false, SIZE*sizeof(bool));
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)
+            current[i*n+j] = adjacency_matrix[i*n+j];
+    */
+    std::copy(adjacency_matrix, adjacency_matrix + SIZE, current);
+
+
+    for(k = 0; k < n; ++k) {
+        tmp1 = &current[k*n];
+        tmp1[k] = true;
+        for(m = 0; m < n; ++m) {
+            tmp2 = &current[m *n];
+            for(l = 0; l < n; ++l) {
+                tmp2[l] = (tmp2[l] | (tmp2[k] & tmp1[l]));
+            }
+        }
+    }
+
+    count = 0;
+    for(m = 0; m < SIZE; ++m) {
+        count += current[m];
+    }
 	
 }
 
