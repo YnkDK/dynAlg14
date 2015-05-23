@@ -27,22 +27,30 @@ void FW_EAGER::init(int n) {
 void FW_EAGER::ins(int i, int j) {
 	adjacency_matrix[i*cols + j] = true;
 	//count = transitive_closure(adjacency_matrix, cols);
-	//or the i-th row with the j-th 
-	current[i*cols+j] = true;
+	//or the i-th row with the j-th
+	bool *tmp1, *tmp2;
+	tmp1 = &current[i*cols];
+	tmp2 = &current[j*cols];
+	tmp1[j] = true;
 	size_t k,m;
-	for(k=0;k<cols;k++)
-		current[i*cols+k] |= current[j*cols+k];
+	for(k = 0; k < cols; ++k)
+		tmp1[k] |= tmp2[k];
 	
 	//or everything that reaches i with the row of j
-	for(k=0;k<cols;k++)
-		if(current[k*cols+i])
-			for(m=0;m<cols;m++)
-				current[k*cols+m] |= current[i*cols+m];
+	tmp2 = &current[i*cols];
+	for(k = 0; k < cols; ++k) {
+		tmp1 = &current[k*cols];
+		if(tmp1[i])
+			for(m = 0; m < cols; ++m)
+				tmp1[m] |= tmp2[m];
+	}
 	count=0;
-	for(k=0;k<cols;k++)
-		for(m=0;m<cols;m++)
-			if(current[k*cols+m])
+	for(k=0;k<cols;k++) {
+		tmp1 = &current[k*cols];
+		for(m = 0; m < cols; ++m)
+			if(tmp1[m])
 				count = count + 1;
+	}
 }
 
 void FW_EAGER::del(int i, int j) {
