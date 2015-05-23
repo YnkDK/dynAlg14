@@ -7,77 +7,34 @@
 #include <iostream>
 using namespace std;
 
-unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n, bool *current) {/*
+unsigned int transitive_closure(bool *adjacency_matrix, const unsigned int n, bool *current) {
+	size_t m, l, k;
 	const unsigned int SIZE = n*n; //< Size of matrix
-	//bool *current = new bool[SIZE]; //< Temp array stating if there is a path from (i,j) 
-	bool *previous = new bool[SIZE]; //< Temp array stating if there is a path from (i,j)
-	unsigned int i, j, k; //< Indices for the loop
-	unsigned int entry, col; //< Position in matrix
-	unsigned int count = 0; //< Number of transitive closures
-	bool *tmp; //< Keeps T(k) and T(k-1) respectively
-	bool gotIntermediate; //< Indicate if node_k was used as intermediate node
-	
-	// All are not connected at first
-	memset( current, false, SIZE*sizeof(bool));
-	
-	// Get all closures without any intermediate nodes
-	for(i = 0; i < n; i++) {
-		for(j = 0; j < n; j++) {
-			entry = i*n + j;
-			if(adjacency_matrix[entry] || i == j) {
-				count++;
-				current[entry] = true;
-			}
-		}
-	}
-	
-	for(k = 0; k < n; k++) {
-		// Swap current and previous
-		tmp = current;
-		current = previous;
-		previous = tmp;
-
-		for(i = 0; i < n; i++) {
-			col = i*n; //<- Current column
-			if(i != k) {
-				for(j = 0; j < n; j++) {
-					// Check if there is a path using node_k as intermediate,
-					// i.e. node_i -> ... -> node_k -> node_j
-					entry = col + j;
-					gotIntermediate = previous[col + k] & previous[k*n + j];
-					// If a _new_ closure was intermediate found using k as
-					// intermediate, then increment the counter
-					if(!previous[entry] && gotIntermediate) count++;
-					// Update the current value
-					current[entry] = previous[entry] | gotIntermediate;
-				}
-			} else {
-				// Nothing can change using the the k'th node as intermediate,
-				// e.g. node_1 -> node_1 -> node_5 is the same as node_1 -> node_1
-				memcpy(&current[col], &previous[col], n*sizeof(bool));
-			}
-		}
-	}
-	// TODO: Fix memory leak!
-	//delete[] current;
-	//delete[] previous;
-	*/
-	size_t i,j,k;
-	const unsigned int SIZE = n*n; //< Size of matrix
+	bool *tmp1, *tmp2;
+	/*
 	memset( current, false, SIZE*sizeof(bool));
 	for(i=0;i<n;i++)
 		for(j=0;j<n;j++)
 			current[i*n+j] = adjacency_matrix[i*n+j];
-	
-	for(k=0;k<n;k++){
-		current[k*n+k] = true;
-		for(i=0;i<n;i++)
-			for(j=0;j<n;j++)
-				current[i*n+j] = (current[i*n+j] | (current[i*n+k] & current[k*n+j]));
+	*/
+	std::copy(adjacency_matrix, adjacency_matrix + SIZE, current);
+
+
+	for(k = 0; k < n; ++k) {
+		tmp1 = &current[k*n];
+		tmp1[k] = true;
+		for(m = 0; m < n; ++m) {
+			tmp2 = &current[m *n];
+			for(l = 0; l < n; ++l) {
+				tmp2[l] = (tmp2[l] | (tmp2[k] & tmp1[l]));
+			}
+		}
 	}
+
 	unsigned int count = 0;
-	for(i=0;i<n;i++)
-		for(j=0;j<n;j++)
-			if(current[i*n+j]) count++;	
+	for(m = 0; m < SIZE; ++m) {
+		count += current[m];
+	}
+
 	return count;
 }
