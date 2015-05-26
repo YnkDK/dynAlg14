@@ -60,7 +60,7 @@ for row in matrix:
 	for entry in row:
 		print '1' if entry else '0',
 	print ''
-
+print 'transitive closure?'
 after = 0
 while after < num_inserts_after:
 	while True:
@@ -74,3 +74,4 @@ while after < num_inserts_after:
 	i.edges.add(j)
 	after += 1
 	print "insert({:d},{:d})".format(i.index, j.index)
+	print 'transitive closure?'
