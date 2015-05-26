@@ -81,7 +81,32 @@ void FW_EAGER::del(int i, int j) {
     for(m = 0; m < SIZE; ++m) {
         count += current[m];
     }
-	
+}
+
+void FW_EAGER::jump(const bool *state) {
+    size_t k, m, l;
+    bool *tmp1, *tmp2;
+    const uint32_t n = cols;
+    const uint32_t SIZE = n*n;
+
+    std::copy(state, state + SIZE, adjacency_matrix);
+    std::copy(state, state + SIZE, current);
+
+    for(k = 0; k < n; ++k) {
+        tmp1 = &current[k*n];
+        tmp1[k] = true;
+        for(m = 0; m < n; ++m) {
+            tmp2 = &current[m *n];
+            for(l = 0; l < n; ++l) {
+                tmp2[l] = (tmp2[l] | (tmp2[k] & tmp1[l]));
+            }
+        }
+    }
+
+    count = 0;
+    for(m = 0; m < SIZE; ++m) {
+        count += current[m];
+    }
 }
 
 unsigned int FW_EAGER::query() {
