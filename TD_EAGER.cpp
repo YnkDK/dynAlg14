@@ -15,7 +15,7 @@ void TD_EAGER::init(int n) {
     //initialize the adjacency matrix where we will store all the edges that are part of the graph
     //we need it in case our randomized algorithm fails (division by zero) to be able to reconstruct
     //the
-    int SIZE = n*n;
+    int SIZE = n * n;
     if (adjacency_matrix != NULL) delete[] adjacency_matrix;
     if (inverse_matrix != NULL) delete[] inverse_matrix;
     if (xs != NULL) delete[] xs;
@@ -141,6 +141,6 @@ unsigned int TD_EAGER::query() {
 }
 
 void TD_EAGER::jump(bool *state) {
-    std::copy(state, state + n*n, adjacency_matrix);
+    std::copy(state, state + n * n, adjacency_matrix);
     // TODO: Implement this
 }

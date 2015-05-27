@@ -16,21 +16,21 @@
 #include <cstdlib> //< ldiv and ldiv_t
 
 #ifndef P
-	#define P 2147483647    //!< 2^31 - 1 = 2147483647
+#define P 2147483647    //!< 2^31 - 1 = 2147483647
 #endif
 #ifndef SEED
-	// Seed using random.org (https://goo.gl/xedsHM)
-	#define SEED 88479329
+// Seed using random.org (https://goo.gl/xedsHM)
+#define SEED 88479329
 #endif
 
-static std::mt19937 mersenne_twister_ (SEED);
+static std::mt19937 mersenne_twister_(SEED);
 static std::uniform_int_distribution<uint32_t> distribution_(0, P - 1);
 
 /**
  * Returns the next random unsigned integer within the field Z/pZ
  */
 inline uint32_t next() {
-	return distribution_(mersenne_twister_);
+    return distribution_(mersenne_twister_);
 }
 
 /**
@@ -38,18 +38,18 @@ inline uint32_t next() {
  * {{1,2,3},{4,5,6},{7,8,9}}
  */
 inline void printMatrix(uint32_t *matrix, int n) {
-	std::cout << "{";
-	for(int i = 0; i < n; i++) {
-		std::cout << "{";
-		for(int j = 0; j < n-1; j++) {
-			std::cout << matrix[i*n + j] << ",";
-		}
-		std::cout << matrix[i*n + n-1]<< "}";
-		if(i < n-1) {
-			std::cout << ",";
-		}
-	}
-	std::cout << "}" << std::endl;
+    std::cout << "{";
+    for (int i = 0; i < n; i++) {
+        std::cout << "{";
+        for (int j = 0; j < n - 1; j++) {
+            std::cout << matrix[i * n + j] << ",";
+        }
+        std::cout << matrix[i * n + n - 1] << "}";
+        if (i < n - 1) {
+            std::cout << ",";
+        }
+    }
+    std::cout << "}" << std::endl;
 }
 
 /*********************************************************************************
@@ -61,8 +61,8 @@ inline void printMatrix(uint32_t *matrix, int n) {
  * then a single subtraction suffice to bring the result back to the field
  */
 inline uint32_t mod_add(const uint64_t a, const uint64_t b) {
-	const uint64_t res = a + b;
-	return (uint32_t) ((res >= P) ? res - P : res);
+    const uint64_t res = a + b;
+    return (uint32_t) ((res >= P) ? res - P : res);
 }
 
 /**
@@ -70,8 +70,8 @@ inline uint32_t mod_add(const uint64_t a, const uint64_t b) {
  * then a single addition suffice to bring the result back to the field
  */
 inline uint32_t mod_sub(const int64_t a, const int64_t b) {
-	const int64_t res = a -  b;
-	return (uint32_t) ((res < 0) ? res + P : (uint32_t) res);
+    const int64_t res = a - b;
+    return (uint32_t) ((res < 0) ? res + P : (uint32_t) res);
 }
 
 /**
@@ -79,8 +79,8 @@ inline uint32_t mod_sub(const int64_t a, const int64_t b) {
  * then we have to use modulo to bring the result back to the field
  */
 inline uint32_t mod_mul(const uint64_t a, const uint64_t b) {
-	const uint64_t res = a*b;
-	return (uint32_t) ((res >= P) ? res % P : res);
+    const uint64_t res = a * b;
+    return (uint32_t) ((res >= P) ? res % P : res);
 }
 
 /**
@@ -98,7 +98,7 @@ inline uint32_t mod_inv(int64_t a) {
 
     u = 1;
     v = 0;
-    while(a != 0) {
+    while (a != 0) {
         std::ldiv_t div = std::ldiv(b, a);
         q = div.quot;
         r = div.rem;
@@ -113,7 +113,7 @@ inline uint32_t mod_inv(int64_t a) {
         u = m;
         v = n;
     }
-    if(x < 0) {
+    if (x < 0) {
         return (uint32_t) (x + P);
     }
     return (uint32_t) x;

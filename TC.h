@@ -12,14 +12,21 @@
 
 #include <string.h> //< memset, memcpy
 
-class TC { 
+class TC {
 public:
-	virtual const char* get_name() = 0;
-	virtual void init(int n) = 0;
-	virtual void ins(int i, int j) = 0;
-	virtual void del(int i, int j) = 0;
-	virtual unsigned int query() = 0;
-	virtual void jump(bool *state) = 0;
-	virtual ~TC() {/* stuff */}
+    virtual const char *get_name() = 0;
+
+    virtual void init(int n) = 0;
+
+    virtual void ins(int i, int j) = 0;
+
+    virtual void del(int i, int j) = 0;
+
+    virtual unsigned int query() = 0;
+
+    virtual void jump(bool *state) = 0;
+
+    virtual ~TC() {/* stuff */}
 };
+
 #endif //_TC_H

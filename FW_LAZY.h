@@ -17,27 +17,30 @@
 
 class FW_LAZY : public TC {
 private:
-	bool *adjacency_matrix;
-	unsigned int cols;
-	
+    bool *adjacency_matrix;
+    unsigned int cols;
+
 public:
-	const char* get_name() {
-		return " Lazy Floyd-Warshall";
-	}
-	
-	virtual void init(int n);
-	virtual void ins(int i, int j);
-	virtual void del(int i, int j);
-	virtual unsigned int query();
-	
-	FW_LAZY() {
-		cols = -1;
-		adjacency_matrix = NULL;
-	}
-	
-	~FW_LAZY() {
-		if(adjacency_matrix != NULL) delete[] adjacency_matrix;
-	}
+    const char *get_name() {
+        return " Lazy Floyd-Warshall";
+    }
+
+    virtual void init(int n);
+
+    virtual void ins(int i, int j);
+
+    virtual void del(int i, int j);
+
+    virtual unsigned int query();
+
+    FW_LAZY() {
+        cols = -1;
+        adjacency_matrix = NULL;
+    }
+
+    ~FW_LAZY() {
+        if (adjacency_matrix != NULL) delete[] adjacency_matrix;
+    }
 };
 
 #endif //_FW_LAZY_H

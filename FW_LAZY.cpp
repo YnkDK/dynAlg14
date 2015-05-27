@@ -12,22 +12,22 @@
 #include "FW_LAZY.h"
 
 void FW_LAZY::init(int n) {
-	if(adjacency_matrix != NULL) delete[] adjacency_matrix;
-	cols = n;
-	
-	adjacency_matrix = new bool[n*n];
-	memset(adjacency_matrix, false, n*n*sizeof(bool));
+    if (adjacency_matrix != NULL) delete[] adjacency_matrix;
+    cols = n;
+
+    adjacency_matrix = new bool[n * n];
+    memset(adjacency_matrix, false, n * n * sizeof(bool));
 }
 
 void FW_LAZY::ins(int i, int j) {
-	adjacency_matrix[i*cols + j] = true;
+    adjacency_matrix[i * cols + j] = true;
 }
 
 void FW_LAZY::del(int i, int j) {
-	adjacency_matrix[i*cols + j] = false;
+    adjacency_matrix[i * cols + j] = false;
 }
 
 unsigned int FW_LAZY::query() {
-	return 1;
-	//return transitive_closure(adjacency_matrix, cols);
+    return 1;
+    //return transitive_closure(adjacency_matrix, cols);
 }
