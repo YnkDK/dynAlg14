@@ -29,20 +29,22 @@ void TD_EAGER::init(int n) {
     // Allocate and initialize the adjacency matrix
     inverse_matrix = new uint32_t[SIZE];
     memset(inverse_matrix, 0, SIZE * sizeof(uint32_t));
-
-    // Compute I-A and (I-A)^(-1), i.e. I
-    for (int i = 0; i < n; i++) {
-        inverse_matrix[i * n + i] = 1;
-        adjacency_matrix[i * n + i] = true;
-    }
-    //initialize the counter to be n since all vertices can reach it self
-    count = (uint32_t) n;
-
     // Pre-compute random values
     xs = new uint32_t[SIZE];
     for (int i = 0; i < SIZE; i++) {
         xs[i] = next();
     }
+
+    // Compute I-A and (I-A)^(-1), i.e. I
+    for (int i = 0; i < n; i++) {
+        inverse_matrix[i * n + i] = 1;
+        adjacency_matrix[i * n + i] = true;
+        xs[i * n + i] = 1;
+    }
+    //initialize the counter to be n since all vertices can reach it self
+    count = (uint32_t) n;
+
+
 }
 
 inline void TD_EAGER::sherman_morrison(int i, int j, uint32_t u) {
@@ -139,5 +141,6 @@ unsigned int TD_EAGER::query() {
 }
 
 void TD_EAGER::jump(bool *state) {
-
+    std::copy(state, state + n*n, adjacency_matrix);
+    // TODO: Implement this
 }
