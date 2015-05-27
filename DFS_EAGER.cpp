@@ -62,3 +62,17 @@ void DFS_EAGER::transitive_closure(){
 unsigned int DFS_EAGER::query() {
 	return count;
 }
+
+void DFS_EAGER::jump(bool *state) {
+	if(adjacency_list.size() != 0) adjacency_list.clear();
+	adjacency_list.resize((unsigned long) cols); //allocate memory for the nodes
+
+	for(int i = 0; i < cols; i++) {
+		for(int j = 0; j < cols; j++) {
+			if(state[i*cols + j]) {
+				adjacency_list[i].push_back(j);
+			}
+		}
+	}
+	transitive_closure();
+}

@@ -32,6 +32,7 @@ public:
 	virtual void ins(int i, int j);
 	virtual void del(int i, int j);
 	virtual unsigned int query();
+	virtual void jump(bool *state);
 	
 	DFS_EAGER() {
 	}

@@ -83,7 +83,7 @@ void FW_EAGER::del(int i, int j) {
     }
 }
 
-void FW_EAGER::jump(const bool *state) {
+void FW_EAGER::jump(bool *state) {
     size_t k, m, l;
     bool *tmp1, *tmp2;
     const uint32_t n = cols;

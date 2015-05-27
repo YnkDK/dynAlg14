@@ -19,6 +19,7 @@ public:
 	virtual void ins(int i, int j) = 0;
 	virtual void del(int i, int j) = 0;
 	virtual unsigned int query() = 0;
+	virtual void jump(bool *state) = 0;
 	virtual ~TC() {/* stuff */}
 };
 #endif //_TC_H

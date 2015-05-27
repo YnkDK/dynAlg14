@@ -38,6 +38,9 @@ void Performance::run(
 		std::ofstream queryOutFile(outputDir + output_prefix + strName + queryOutSuffix);
 		for (auto &change : changes) {
 			switch(change.type) {
+			case 4:
+				alg->jump(change.state);
+				break;
 			case 3:
 				alg->init(change.i);
 				break;

@@ -31,7 +31,7 @@ public:
 	virtual void ins(int i, int j);
 	virtual void del(int i, int j);
 	virtual unsigned int query();
-	void jump(const bool *state);
+	void jump(bool *state);
 	
 	FW_EAGER() {
 		cols = 0;
