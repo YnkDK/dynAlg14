@@ -44,7 +44,10 @@ int main(int argc, const char* argv[]) {
 	// Then define input
 	std::vector<Input> change_sequence;
 	read_input(inputFile.c_str(), change_sequence);
-	
+	if(change_sequence.size() == 0) {
+		std::cout << "ERROR" << std::endl;
+		return -1;
+	}
 	// Format the output prefix
 	unsigned long idx = inputFile.find("change");
 	unsigned long idxEnd = inputFile.find(".txt");
