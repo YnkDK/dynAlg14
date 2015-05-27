@@ -4,74 +4,91 @@
 	This software is implemented as part of the course Dynamic Algorithms 
 	(Q4 2015) at Aarhus Univerity Denmark. 
 
-	jump_ahead.py
-
+	jump_ahead.py n num_inserts_before num_inserts_after seed
+	Generates a changefile using the following pattern: init, jump, insert.
+	For example ./jump_ahead 3 3 3 42 yields:
+	init(3)
+	jump
+	1 0 0 
+	1 1 0 
+	1 1 1 
+	transitive closure?
+	insert(0,1)
+	transitive closure?
+	insert(0,2)
+	transitive closure?
+	insert(1,2)
+	transitive closure?
 
 	Author: Martin Storgaard and Konstantinos Mampentzidis
 """
 import sys
-from random import choice, sample, seed
+from random import seed, randint
 
-try:
-	n = int(sys.argv[1])
-	num_inserts_before = int(sys.argv[2])
-	num_inserts_after = int(sys.argv[3])
-	assert num_inserts_before + num_inserts_after < n*n-n+1
-	seed(sys.argv[4])
-except:
-	print 'Usage: TODO'
-	sys.exit()
-else:
-	print 'init({:d})'.format(n)
+def main():
+	try:
+		# Parse input parameters and throw appropriate error
+		n = int(sys.argv[1])
+		num_inserts_before = int(eval(sys.argv[2]))
+		num_inserts_after = int(eval(sys.argv[3]))
 	
-class Node:
-	"""
-	A node containins an adjacency list and the index of it self
-	"""
-	def __init__(self, index):
-		self.index = index
-		self.edges = set()
-
-nodes = tuple(Node(i) for i in range(n))
-
-before = 0
-
-while before < num_inserts_before:
-	while True:
-		i = choice(nodes)
-		if len(i.edges) < n-1:
-			break
-	while True:
-		j = choice(nodes)
-		if i != j and not j in i.edges:
-			break
-	i.edges.add(j)
-	before += 1
-
-matrix = [[False]*n for i in xrange(n)]
-for node in nodes:
-	for e in node.edges:
-		matrix[node.index][e.index] = True
-for i in xrange(n):
-	matrix[i][i] = True
+		assert num_inserts_before + num_inserts_after < n*n-n+1,\
+		'The total number of inserts must be smaller than n*n-n+1 = {:d}'.format(n*n-n+1)
 	
-print 'jump'
-for row in matrix:
-	for entry in row:
-		print '1' if entry else '0',
-	print ''
-print 'transitive closure?'
-after = 0
-while after < num_inserts_after:
-	while True:
-		i = choice(nodes)
-		if len(i.edges) < n-1:
-			break
-	while True:
-		j = choice(nodes)
-		if i != j and not j in i.edges:
-			break
-	i.edges.add(j)
-	after += 1
-	print "insert({:d},{:d})".format(i.index, j.index)
+		seed(sys.argv[4])
+	except IndexError:
+		print 'Usage: ./jump_ahead n num_inserts_before num_inserts_after seed'
+		sys.exit()
+	except AssertionError as e:
+		print e
+		sys.exit()
+	except ValueError as e:
+		print 'Argument 1,2 and 3 must be integers.', e.message.split(' ')[-1], 'is not an integer'
+		sys.exit()
+	else:
+		print 'init({:d})'.format(n)
+	
+	before = 0
+
+	matrix = [[False]*n for i in xrange(n)]
+	for i in xrange(n):
+		# Always have en edge between (i, i)
+		matrix[i][i] = True
+	
+	while before < num_inserts_before:
+		i, j = randint(0,n-1), randint(0,n-1)
+		if matrix[i][j]:
+			# We already have an edge between (i, j)
+			continue
+		# Set an edge between (i, j)
+		matrix[i][j] = True
+		before += 1
+
+	# Print the jump command
+	print 'jump'
+	for row in matrix:
+		for entry in row:
+			print '1' if entry else '0',
+		print ''
 	print 'transitive closure?'
+
+	after = 0
+	while after < num_inserts_after:
+		i, j = randint(0,n-1), randint(0,n-1)
+		if matrix[i][j]:
+			# We already have an edge between (i, j)
+			continue
+		# Set an edge between (i, j)
+		matrix[i][j] = True
+		after += 1
+		# Print the insert command
+		print "insert({:d},{:d})".format(i, j)
+		print 'transitive closure?'
+		
+if __name__ == '__main__':
+	if '-OO' not in sys.argv and not '--debug' in sys.argv:
+		import os
+		sys.argv.append('-OO')
+		os.execl(sys.executable, sys.executable, '-OO', *sys.argv)
+	else:
+		main()
