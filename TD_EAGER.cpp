@@ -137,3 +137,7 @@ unsigned int TD_EAGER::query() {
     // Oh, we were eager, wasn't we?
     return count;
 }
+
+void TD_EAGER::jump(bool *state) {
+
+}
